@@ -1,0 +1,14 @@
+[
+    {
+        "model": "modules.module",
+        "pk": 1,
+        "fields": {
+            "name": "Initial Module",
+            "version": "1.0",
+            "status": "installed",
+            "installed_at": "2023-10-01T00:00:00Z",
+            "repository": "https://github.com/herbew/promodules.git",
+            "description": "Initial Description"
+        }
+    }
+]
