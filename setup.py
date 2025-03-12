@@ -1,4 +1,32 @@
 from setuptools import setup, find_packages
+import os
+
+def post_install():
+    """
+    This function will be executed after the installation is complete.
+    """
+    import django
+    from django.core.management import call_command
+
+    # Set up Django environment
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'proproducts.settings')
+    django.setup()
+
+    # Add records to the modules.models.Module model
+    from modules.models import Module
+
+    # Check if the record already exists
+    if not Module.objects.filter(name='proproducts').exists():
+        Module.objects.create(
+            name='proproducts',
+            version='0.1',
+            status='installed',
+            repository='https://github.com/herbew/proproducts.git',
+            description='Django Project Management Products'
+        )
+        print("Record 'proproducts' successfully added to modules_module.")
+    else:
+        print("Record 'proproducts' already exists in modules_module.")
 
 setup(
     name='proproducts',
@@ -29,4 +57,9 @@ setup(
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     ],
+    entry_points={
+        'distutils.commands': [
+            'post_install = proproducts.setup:post_install',
+        ],
+    },
 )
