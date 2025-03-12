@@ -2,7 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-class Users(AbstractUser):
+class User(AbstractUser):
     TYPE_CHOICES = [
         ('001', _('Admin')),
         ('002', _('Manager')),
@@ -18,4 +18,4 @@ class Users(AbstractUser):
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
 
     class Meta:
-        db_table = 'users_users'
+        db_table = 'users_user'
