@@ -1,13 +1,19 @@
-from django.test import TestCase, Client
+from django.test import TestCase, Client, override_settings
 from django.urls import reverse
 from django.contrib.auth import get_user_model
-from .models import Product, ProductAdditionalField
+from products.models import Product, ProductAdditionalField
 
-User = get_user_model()
+@override_settings(DATABASES={
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ':memory:',
+    }
+})
 
 class ProductViewsTest(TestCase):
     def setUp(self):
         self.client = Client()
+        User = get_user_model()
         self.manager = User.objects.create_user(
             username='manager',
             password='managerpassword123',
@@ -89,6 +95,7 @@ class ProductViewsTest(TestCase):
 class ProductAdditionalFieldViewsTest(TestCase):
     def setUp(self):
         self.client = Client()
+        User = get_user_model()
         self.manager = User.objects.create_user(
             username='manager',
             password='managerpassword123',
