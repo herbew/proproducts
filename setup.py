@@ -1,9 +1,14 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='proproduct',
+    name='proproducts',
     version='0.1',
     packages=find_packages(),
+    include_package_data=True,
+    package_data={
+        'proproducts': ['templates/modules/*.html',],
+        'users': ['fixtures/*.json'],
+    },
     install_requires=[
         'django==5.1.7',
         'django-formtools==2.5.1',
