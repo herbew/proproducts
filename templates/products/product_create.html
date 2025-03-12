@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Product</title>
+    <!-- Tambahkan CSS atau link ke file CSS jika diperlukan -->
+    <style>
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-container h1 {
+            text-align: center;
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .form-container input[type="text"],
+        .form-container input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-container button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Create Product</h1>
+        <form method="post">
+            {% csrf_token %}
+            <!-- Render form fields -->
+            <div>
+                <label for="id_name">Name:</label>
+                {{ form.name }}
+            </div>
+            <div>
+                <label for="id_barcode">Barcode:</label>
+                {{ form.barcode }}
+            </div>
+            <div>
+                <label for="id_price">Price:</label>
+                {{ form.price }}
+            </div>
+            <div>
+                <label for="id_stock">Stock:</label>
+                {{ form.stock }}
+            </div>
+            <button type="submit">Create Product</button>
+        </form>
+        <br>
+        <a href="{% url 'product_list' %}">Back to Product List</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Additional Field</title>
+    <!-- Tambahkan CSS atau link ke file CSS jika diperlukan -->
+    <style>
+        .delete-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .delete-container h1 {
+            margin-bottom: 20px;
+        }
+        .delete-container p {
+            margin-bottom: 20px;
+        }
+        .delete-container button {
+            background-color: #ff4d4d;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .delete-container button:hover {
+            background-color: #ff1a1a;
+        }
+        .delete-container a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #333;
+            text-decoration: none;
+        }
+        .delete-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="delete-container">
+        <h1>Delete Additional Field</h1>
+        <p>Are you sure you want to delete "{{ object.name_field }}: {{ object.value_field }}"?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Delete</button>
+        </form>
+        <br>
+        <a href="{% url 'product_additional_field_list' %}">Cancel</a>
+    </div>
+</body>
+</html>
