@@ -1,26 +1,24 @@
 [
     {
-        "model": "users.users",
-        "pk": 2,
+        "model": "users.user",
+		"pk": 2,
         "fields": {
             "username": "manager",
-            "password": "pbkdf2_sha256$260000$...",  # Hash dari "#!password!!23"
+            "password": "pbkdf2_sha256$260000$w2kQ7Z4yZBq1dL9yL8Q8w$8aR3WZB3WZB3WZB3WZB3WZB3WZB3",
             "name": "HashMicro Manager",
             "email": "hm.manager@gmail.com",
-            "type": "002",
-            "gender": "m"
+            "type": "002"
         }
     },
     {
-        "model": "users.users",
-        "pk": 3,
+        "model": "users.user",
+		"pk": 3,
         "fields": {
             "username": "member",
-            "password": "pbkdf2_sha256$260000$...",  # Hash dari "#!password!!23"
+            "password": "pbkdf2_sha256$260000$w2kQ7Z4yZBq1dL9yL8Q8w$8aR3WZB3WZB3WZB3WZB3WZB3WZB3",
             "name": "HashMicro Member",
             "email": "hm.member@gmail.com",
-            "type": "003",
-            "gender": "f"
+            "type": "003"
         }
     }
 ]

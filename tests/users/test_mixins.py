@@ -1,24 +1,19 @@
-from django.test import TestCase, RequestFactory, override_settings
+from django.test import TestCase, RequestFactory
+from django.views.generic import View
 from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 from django.core.exceptions import PermissionDenied
 from users.mixins import AdminMixin, ManagerMixin, MemberMixin
 
-@override_settings(DATABASES={
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': ':memory:',
-    }
-})
-
 User = get_user_model()
 
-# View dummy for testing mixins
-class DummyView:
+# Kelas dummy untuk testing
+class DummyView(View):
     def dispatch(self, request, *args, **kwargs):
+        # self.request sudah diatur oleh Django
         return HttpResponse("Success")
 
-# View who uses mixins
+# View yang menggunakan mixins
 class AdminView(AdminMixin, DummyView):
     pass
 
@@ -32,8 +27,8 @@ class MixinsTest(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
         
-        # Create users with different types
-        self.admin_user = User.objects.create_superuser(
+        # Buat pengguna dengan tipe berbeda
+        self.admin_user = User.objects.create_user(
             username='admin',
             password='adminpassword',
             type='001',  # Admin
@@ -59,78 +54,70 @@ class MixinsTest(TestCase):
         )
 
     def test_admin_mixin_with_admin_user(self):
-        # Admin can access view
+        # Admin dapat mengakses view
         request = self.factory.get('/')
-        request.user = self.admin_user
-        view = AdminView()
-        response = view.dispatch(request)
+        request.user = self.admin_user  # Atur user pada request
+        view = AdminView.as_view()  # Buat callable view
+        response = view(request)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content.decode(), "Success")
-	
-	def test_admin_mixin_with_non_admin_user(self):
-        # Manager cannot access the view
-        request = self.factory.get('/')
-        request.user = self.manager_user
-        view = AdminView()
-        with self.assertRaises(PermissionDenied):
-            view.dispatch(request)
 
-        # Members cannot access the view
-        request.user = self.member_user
+    def test_admin_mixin_with_non_admin_user(self):
+        # Manager tidak dapat mengakses view
+        request = self.factory.get('/')
+        request.user = self.manager_user  # Atur user pada request
+        view = AdminView.as_view()  # Buat callable view
         with self.assertRaises(PermissionDenied):
-            view.dispatch(request)
+            view(request)
+
+        # Member tidak dapat mengakses view
+        request.user = self.member_user  # Atur user pada request
+        with self.assertRaises(PermissionDenied):
+            view(request)
 
     def test_manager_mixin_with_manager_user(self):
-        # Manager can access the view
+        # Manager dapat mengakses view
         request = self.factory.get('/')
-        request.user = self.manager_user
-        view = ManagerView()
-        response = view.dispatch(request)
+        request.user = self.manager_user  # Atur user pada request
+        view = ManagerView.as_view()  # Buat callable view
+        response = view(request)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content.decode(), "Success")
 
     def test_manager_mixin_with_non_manager_user(self):
-        # Admin can access the view (because admin is included in the manager)
+        # Admin dapat mengakses view (karena admin termasuk dalam manager)
         request = self.factory.get('/')
-        request.user = self.admin_user
-        view = ManagerView()
-        response = view.dispatch(request)
+        request.user = self.admin_user  # Atur user pada request
+        view = ManagerView.as_view()  # Buat callable view
+        response = view(request)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content.decode(), "Success")
 
-        # Members cannot access the view
-        request.user = self.member_user
+        # Member tidak dapat mengakses view
+        request.user = self.member_user  # Atur user pada request
         with self.assertRaises(PermissionDenied):
-            view.dispatch(request)
-            
+            view(request)
+
     def test_member_mixin_with_member_user(self):
-        # Members can access the view
+        # Member dapat mengakses view
         request = self.factory.get('/')
-        request.user = self.member_user
-        view = MemberView()
-        response = view.dispatch(request)
+        request.user = self.member_user  # Atur user pada request
+        view = MemberView.as_view()  # Buat callable view
+        response = view(request)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content.decode(), "Success")
 
     def test_member_mixin_with_non_member_user(self):
-        # Admin can access the view (because admin is a member)
+        # Admin dapat mengakses view (karena admin termasuk dalam member)
         request = self.factory.get('/')
-        request.user = self.admin_user
-        view = MemberView()
-        response = view.dispatch(request)
+        request.user = self.admin_user  # Atur user pada request
+        view = MemberView.as_view()  # Buat callable view
+        response = view(request)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content.decode(), "Success")
 
-        # Managers can access the view (because managers are members)
-        request.user = self.manager_user
-        response = view.dispatch(request)
+        # Manager dapat mengakses view (karena manager termasuk dalam member)
+        request.user = self.manager_user  # Atur user pada request
+        response = view(request)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content.decode(), "Success")
-        
-        
-
-        
-        
-        
-        
-        

@@ -9,11 +9,10 @@ from django.core.exceptions import ValidationError
     }
 })
 
-User = get_user_model()
-
 class UsersModelTest(TestCase):
     def test_create_user(self):
         # Create a new user
+        User = get_user_model()
         user = User.objects.create_user(
             username='testuser',
             password='testpassword123',
@@ -36,6 +35,7 @@ class UsersModelTest(TestCase):
 
     def test_create_superuser(self):
         # Create a new superuser
+        User = get_user_model()
         superuser = User.objects.create_superuser(
             username='admin',
             password='adminpassword123',
@@ -58,6 +58,7 @@ class UsersModelTest(TestCase):
 
     def test_user_type_choices(self):
         # Check the options for the `type` field
+        User = get_user_model()
         user = User.objects.create_user(
             username='testuser',
             password='testpassword123',
@@ -78,6 +79,7 @@ class UsersModelTest(TestCase):
 
     def test_user_gender_choices(self):
         # Checking choices for the `gender` field
+        User = get_user_model()
         user = User.objects.create_user(
             username='testuser',
             password='testpassword123',
@@ -98,6 +100,7 @@ class UsersModelTest(TestCase):
 
     def test_user_str_representation(self):
         # Create a new user
+        User = get_user_model()
         user = User.objects.create_user(
             username='testuser',
             password='testpassword123',

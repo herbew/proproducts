@@ -2,14 +2,122 @@
 <html>
 <head>
     <title>Product List</title>
+	<!-- Add CSS or link to CSS file if needed -->
+	    <style>
+	        body {
+	            font-family: Arial, sans-serif;
+	            margin: 0;
+	            padding: 0;
+	            background-color: #f4f4f4;
+	        }
+	        .container {
+	            max-width: 800px;
+	            margin: 20px auto;
+	            padding: 20px;
+	            background-color: #fff;
+	            border-radius: 5px;
+	            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	        }
+	        h1 {
+	            text-align: center;
+	            margin-bottom: 20px;
+	        }
+	        table {
+	            width: 100%;
+	            border-collapse: collapse;
+	            margin-bottom: 20px;
+	        }
+	        table, th, td {
+	            border: 1px solid #ddd;
+	        }
+	        th, td {
+	            padding: 10px;
+	            text-align: left;
+	        }
+	        th {
+	            background-color: #f8f9fa;
+	        }
+	        tr:nth-child(even) {
+	            background-color: #f9f9f9;
+	        }
+	        tr:hover {
+	            background-color: #f1f1f1;
+	        }
+	        .actions {
+	            text-align: center;
+	        }
+	        .actions a {
+	            margin: 0 5px;
+	            text-decoration: none;
+	            color: #007bff;
+	        }
+	        .actions a:hover {
+	            text-decoration: underline;
+	        }
+	        .add-button {
+	            display: block;
+	            text-align: center;
+	            margin-bottom: 20px;
+	        }
+	        .add-button a {
+	            background-color: #28a745;
+	            color: white;
+	            padding: 10px 20px;
+	            text-decoration: none;
+	            border-radius: 5px;
+	        }
+	        .add-button a:hover {
+	            background-color: #218838;
+	        }
+	        .back-link {
+	            display: block;
+	            text-align: center;
+	            margin-top: 20px;
+	        }
+	        .back-link a {
+	            color: #007bff;
+	            text-decoration: none;
+	        }
+	        .back-link a:hover {
+	            text-decoration: underline;
+	        }
+	    </style>
 </head>
 <body>
-    <h1>Product List</h1>
-    <ul>
-        {% for product in products %}
-        <li>{{ product.name }} - {{ product.barcode }} - ${{ product.price }}</li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'product_create' %}">Create Product</a>
+	<div class="container">
+        <h1>Product List</h1>
+        <div class="add-button">
+            <a href="{% url 'products:product_create' %}">Create Product</a>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Barcode</th>
+                    <th>Stock</th>
+					<th>Price</th>
+                    <th class="actions">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td><a href="{% url 'products:product_update' product.id %}">{{ product.name }}</a></td>
+                    <td>{{ product.barcode }}</td>
+                    <td>{{ product.stock }}</td>
+					<td>{{ product.price }}</td>
+                    <td class="actions">
+                        <a href="{% url 'products:product_additional_field_list' %}">Aditional Fields</a>
+                        <a href="{% url 'products:product_delete' product.id %}">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" style="text-align: center;">No Product found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

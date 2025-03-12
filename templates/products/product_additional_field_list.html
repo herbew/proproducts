@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Additional Field List</title>
-    <!-- Tambahkan CSS atau link ke file CSS jika diperlukan -->
+    <!-- Add CSS or link to CSS file if needed -->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -87,7 +87,7 @@
     <div class="container">
         <h1>Additional Field List</h1>
         <div class="add-button">
-            <a href="{% url 'product_additional_field_create' %}">Add Additional Field</a>
+            <a href="{% url 'products:product_additional_field_create' %}">Add Additional Field</a>
         </div>
         <table>
             <thead>
@@ -105,8 +105,8 @@
                     <td>{{ field.name_field }}</td>
                     <td>{{ field.value_field }}</td>
                     <td class="actions">
-                        <a href="{% url 'product_additional_field_update' field.id %}">Edit</a>
-                        <a href="{% url 'product_additional_field_delete' field.id %}">Delete</a>
+                        <a href="{% url 'products:product_additional_field_update' field.id %}">Edit</a>
+                        <a href="{% url 'products:product_additional_field_delete' field.id %}">Delete</a>
                     </td>
                 </tr>
                 {% empty %}
@@ -117,7 +117,7 @@
             </tbody>
         </table>
         <div class="back-link">
-            <a href="{% url 'product_list' %}">Back to Product List</a>
+            <a href="{% url 'products:product_list' %}">Back to Product List</a>
         </div>
     </div>
 </body>
