@@ -1,0 +1,2 @@
+include proproducts/templates/products/*.html
+include users/fixtures/*.json
