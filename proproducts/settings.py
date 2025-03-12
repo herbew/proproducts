@@ -53,7 +53,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'promodules.wsgi.application'
+WSGI_APPLICATION = 'proproducts.wsgi.application'
 
 DATABASES = {
     'default': {
@@ -83,8 +83,12 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-STATIC_URL = '/static/'
-
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+
+AUTH_USER_MODEL = 'users.User'
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
 
 
