@@ -1,14 +1,42 @@
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.core.exceptions import PermissionDenied
+from django.http import HttpResponseForbidden
 
 class AdminMixin(UserPassesTestMixin):
     def test_func(self):
-        return self.request.user.type == '001'
+		typed = False
+		try:
+			typed = self.request.user.type == '001'
+		except:
+			pass
+			
+        return typed
+
+    def handle_no_permission(self):
+        return HttpResponseForbidden("You don't have permission to access this page.")
 
 class ManagerMixin(UserPassesTestMixin):
     def test_func(self):
-        return self.request.user.type in ('001', '002')
+		typed = False
+		try:
+			typed = self.request.user.type in ('001', '002')
+		except:
+			pass
+			
+        return typed
+
+    def handle_no_permission(self):
+        return HttpResponseForbidden("You don't have permission to access this page.")
 
 class MemberMixin(UserPassesTestMixin):
     def test_func(self):
-        return self.request.user.type in ('001', '002', '003')
+		# This for handling Anonymouse User
+		typed = False
+		try:
+			typed = self.request.user.type in ('001', '002', '003')
+		except:
+			pass
+			
+        return typed
+
+    def handle_no_permission(self):
+        return HttpResponseForbidden("You don't have permission to access this page.")
