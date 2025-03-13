@@ -8,7 +8,7 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
 	
-	class Meta:
+    class Meta:
         db_table = 'products_product'
         
     def __str__(self):
@@ -19,7 +19,7 @@ class ProductAdditionalField(models.Model):
     name_field = models.CharField(max_length=50)
     value_field = models.CharField(max_length=100)
 	
-	class Meta:
+    class Meta:
         db_table = 'products_proaddfield'
         
     def __str__(self):
