@@ -38,8 +38,8 @@ setup(
         'users': ['fixtures/*.json'],
     },
     install_requires=[
-        'django==5.1.7',
-        'django-formtools==2.5.1',
+        'django',
+        'django-formtools',
         'django-environ',
     ],
     author='Heribertus Rustyawan',
