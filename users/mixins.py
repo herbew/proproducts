@@ -19,6 +19,8 @@ def is_block_url(request):
                 else:  # If this is a regular URLPattern
                     if u not in self.urls_blocked:
                         urls_blocked.append(u)
+                        
+            if urls_blocked: urls_blocked.append('')
     
         except ImportError:
             # if module not found, skip
