@@ -4,10 +4,10 @@ from .models import Product, ProductAdditionalField
 from .forms import (ProductCreateForm, ProductUpdateForm, 
 			ProductAdditionalFieldCreateForm, 
 			ProductAdditionalFieldUpdateForm)
-from users.mixins import MemberMixin, ManagerMixin
+from users.mixins import AnonymousMixin, MemberMixin, ManagerMixin
 
 # Product Views
-class ProductListView(ListView):
+class ProductListView(AnonymousMixin, ListView):
     model = Product
     template_name = 'products/product_list.html'
     context_object_name = 'products'
@@ -30,7 +30,7 @@ class ProductDeleteView(ManagerMixin, DeleteView):
     success_url = reverse_lazy('products:product_list')
 
 # ProductAdditionalField Views
-class ProductAdditionalFieldListView(ListView):
+class ProductAdditionalFieldListView(AnonymousMixin, ListView):
     model = ProductAdditionalField
     template_name = 'products/product_additional_field_list.html'
     context_object_name = 'additional_fields'
